@@ -6,6 +6,7 @@ storing, loading, and traversing files and folders.
 (C) 2020 Muhammad Bilal Akmal, 17K-3669
 """
 
+import pickle
 from os import walk
 
 from ir3_document import Document
@@ -46,3 +47,17 @@ def read_documents(root_path: str):
             documents[doc_id] = document
 
     return documents
+
+
+def load_object(file_path):
+    try:
+        with open(file_path, 'rb') as file:
+            vsm_index = pickle.load(file)
+            return vsm_index
+    except FileNotFoundError:
+        return None
+
+
+def store_object(object, file_path):
+    with open(file_path, 'wb') as file:
+        pickle.dump(object, file)
