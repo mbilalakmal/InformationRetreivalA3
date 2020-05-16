@@ -22,11 +22,11 @@ def main():
     accuracy = evaluate_classification(vsm_matrix, response_vector, k, ratio)
     dd = time()
 
-    print(f'Read in : {bb-aa} seconds\n'
-          f'VSM created in : {cc-bb} seconds\n'
-          f'Evaluated in : {dd-cc} seconds\n')
+    print(f'Read in : {bb - aa} seconds\n'
+          f'VSM created in : {cc - bb} seconds\n'
+          f'Evaluated in : {dd - cc} seconds\n')
 
-    print(accuracy*100)
+    print(accuracy * 100)
 
 
 if __name__ == '__main__':
