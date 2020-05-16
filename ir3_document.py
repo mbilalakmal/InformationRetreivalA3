@@ -1,3 +1,12 @@
+"""
+This module defines a Document object
+which contains the features and the label
+of an actual text document.
+
+
+(C) 2020 Muhammad Bilal Akmal, 17K-3669
+"""
+
 from ir3_preprocessing import extract_features
 
 
