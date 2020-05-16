@@ -41,12 +41,9 @@ def _apply_tfidf(vsm_matrix):
 
     # sum nonzero values along vertical axis
     document_frequencies = (vsm_matrix != 0).sum(0)
-
     idf_vector = np.log(vsm_matrix.shape[0]/document_frequencies)
 
-    vsm_matrix += 1
-    vsm_matrix = np.log(vsm_matrix)
-
+    vsm_matrix = np.log(vsm_matrix + 1)
     vsm_matrix *= idf_vector
 
     return vsm_matrix
