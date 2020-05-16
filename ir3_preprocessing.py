@@ -1,10 +1,10 @@
 """
-This module defines preprocessing methods for
+This module defines pre-processing methods for
 text documents. The steps are mentioned below:
 1. Tokenize
-2. Casefold
+2. Case-fold
 3. Remove stopwords
-3. Lemmatize
+3. Stem
 
 
 (C) 2020 Muhammad Bilal Akmal, 17K-3669
@@ -12,7 +12,7 @@ text documents. The steps are mentioned below:
 
 import re
 
-from nltk.stem import WordNetLemmatizer
+from nltk.stem import PorterStemmer
 
 
 def extract_features(document: str):
@@ -22,9 +22,8 @@ def extract_features(document: str):
 
     tokens = _remove_stopwords(tokens)
 
-    # download('wordnet')
-    lemmatizer = WordNetLemmatizer()
-    terms = [lemmatizer.lemmatize(token) for token in tokens]
+    stemmer = PorterStemmer()
+    terms = [stemmer.stem(token) for token in tokens]
 
     return terms
 
