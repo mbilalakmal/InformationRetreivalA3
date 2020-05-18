@@ -24,24 +24,20 @@ def evaluate_classification(
 
     # calculate similarity scores of test set with train set
     similarity_matrix = _measure_cos_sim(train_set, test_set)
-
     # select k largest scores (kNN)
     knn_matrix = _create_knn_matrix(similarity_matrix, response_vector, k)
 
-    # predict categories vector (Series)
+    # predict categories vector (Series) using most repeated category
     predict_vector = knn_matrix.mode(axis='columns')[0]
 
     # store results
     if store_results:
-        predict_vector.to_csv('results.csv')
+        predict_vector.to_csv('q1_results.csv')
 
     # bool list containing True for accurate classification
-    accurate = [
-        response_vector[doc_id] == category for doc_id, category in predict_vector.iteritems()
-    ]
-
-    # calculate accuracy (%)
+    accurate = [response_vector[doc_id] == category for doc_id, category in predict_vector.iteritems()]
     accuracy = (sum(accurate) / len(accurate))
+
     return accuracy
 
 

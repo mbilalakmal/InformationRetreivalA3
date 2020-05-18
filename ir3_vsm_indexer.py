@@ -64,16 +64,15 @@ def _apply_mi(vsm_matrix, response_vector):
 
     vsm_bool = vsm_matrix.copy(deep=True)
     vsm_bool[vsm_bool != 0] = 1
-    # add category as a column
-    vsm_bool['category'] = response_vector
+    vsm_bool['category'] = response_vector  # add category column
     confusion_matrix = vsm_bool.groupby(['category']).sum()
     confusion_matrix /= ndoc
 
     category_priors = response_vector.groupby(response_vector).count()
-    category_priors /= ndoc
+    category_priors /= ndoc  # p of doc belonging to category
 
     term_priors = (vsm_matrix != 0).sum(0)
-    term_priors /= ndoc
+    term_priors /= ndoc  # p of doc containing term
 
     # create 00, 01, 11, 10 matrices
     n_11 = confusion_matrix             # category = term = True
@@ -100,17 +99,18 @@ def _apply_mi(vsm_matrix, response_vector):
 
     mi_matrix = mi_00 + mi_01 + mi_10 + mi_11
 
-    # for each category select top nterm/5
-    k_terms = int(len(vsm_matrix.columns)/(len(mi_matrix.index)))
+    # for each category select top nterm/ (k**2)
+    k_terms = int(len(vsm_matrix.columns)/(len(mi_matrix.index) ** 2))
 
     selected_terms = set()
     # selected_terms = {row.nlargest(k_terms).index.tolist() for _, row in mi_matrix.iterrows()}
     for _, row in mi_matrix.iterrows():
         selected_terms.update(row.nlargest(k_terms).index.tolist())
 
+    # only keep selected_terms, drop other columns
     vsm_matrix = vsm_matrix[selected_terms]
 
-    print(f'Features selected: {len(selected_terms)}')
+    print(f'Features: {len(selected_terms)}')
 
     return vsm_matrix
 

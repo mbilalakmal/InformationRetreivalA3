@@ -28,7 +28,7 @@ def read_documents(root_path: str):
     documents = {}  # dictionary containing the documents
 
     for cat_folder in category_folders:
-        # get filenames from current folder
+        # get file names from current folder
         folder_path = fr'{root_path}\{cat_folder}'
         doc_filenames = next(walk(folder_path, '.'))[2]
 
