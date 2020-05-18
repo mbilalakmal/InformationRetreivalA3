@@ -52,12 +52,12 @@ def read_documents(root_path: str):
 def load_object(file_path):
     try:
         with open(file_path, 'rb') as file:
-            vsm_index = pickle.load(file)
-            return vsm_index
+            obj = pickle.load(file)
+            return obj
     except FileNotFoundError:
         return None
 
 
-def store_object(object, file_path):
+def store_object(obj, file_path):
     with open(file_path, 'wb') as file:
-        pickle.dump(object, file)
+        pickle.dump(obj, file)
