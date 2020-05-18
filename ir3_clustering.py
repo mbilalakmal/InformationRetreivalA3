@@ -4,7 +4,6 @@
 (C) 2020 Muhammad Bilal Akmal, 17K-3669
 """
 
-import pickle
 from collections import Counter
 
 import numpy as np
@@ -21,20 +20,13 @@ def evaluate_clustering(
     centroids = pd.DataFrame.copy(vsm_matrix.sample(n=k), deep=True)
     centroids.reset_index(drop=True, inplace=True)
 
-    print(centroids)
+    # print(centroids)
 
     clusters = {}
-
-    # print(centroids)
-    # centroids.iloc[:, :] = 6.9
-    # print(centroids)
-    # print(vsm_matrix.loc[centroids.index])
 
     iterations = 0
 
     while (
-        # iterations
-        # RSS not decreasing
         # centroids not changing
         True
     ):
@@ -50,7 +42,6 @@ def evaluate_clustering(
         iterations += 1
 
         if centroids.equals(old_centroids):
-            print('Done')
             break
 
     for idx, vectors in clusters.items():
@@ -79,6 +70,8 @@ def evaluate_clustering(
 
     print(iterations)
 
+    return purity
+
 
 def _measure_cos_sim(columns_set: pd.DataFrame, rows_set: pd.DataFrame):
     similarity_matrix = rows_set.dot(columns_set.transpose())
@@ -103,10 +96,10 @@ def _calculate_centroids(clusters: dict):
     centroids = centroids.div(row_magnitudes, axis=0)
 
     return centroids
-
-
-
-with open(r'vsm_index', 'rb') as file:
-    vsm_index = pickle.load(file)
-
-evaluate_clustering(vsm_index[0], k=5)
+#
+#
+#
+# with open(r'vsm_index', 'rb') as file:
+#     vsm_index = pickle.load(file)
+#
+# evaluate_clustering(vsm_index[0], k=5)
